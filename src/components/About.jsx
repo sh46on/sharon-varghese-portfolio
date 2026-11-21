@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Counter, Reveal, SectionHead } from './UI'
 import { stats } from '../data'
+import { srcSet } from '../img'
 
 const story =
   'I started out servicing fire-alarm panels in Abu Dhabi — systems people trust with their lives, so they can never fail quietly. Today I write software with the same mindset: interfaces that feel effortless, APIs that stay honest, and queries that come back in milliseconds instead of seconds.'
@@ -88,7 +89,7 @@ export default function About({ bp }) {
 
           <div className="about__media" ref={frameRef}>
             <motion.div className="about__frame" style={{ clipPath: clip }}>
-              <motion.img src="/img/studio.webp" alt="Sharon K Varghese — studio portrait" style={{ scale }} />
+              <motion.img src="/img/studio.webp" srcSet={srcSet('/img/studio.webp')} sizes="(max-width: 639px) 92vw, 32vw" alt="Sharon K Varghese — studio portrait" loading="lazy" decoding="async" style={{ scale }} />
             </motion.div>
             {bp !== 'mobile' && (
               <motion.div className="about__tag" style={{ y: tagY }}>

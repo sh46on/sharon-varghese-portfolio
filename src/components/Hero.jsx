@@ -1,10 +1,11 @@
 import { useRef } from 'react'
 import {
-  motion, useAnimationFrame, useMotionValue, useScroll, useSpring, useTransform, useVelocity,
+  motion, useAnimationFrame, useInView, useMotionValue, useScroll, useSpring, useTransform, useVelocity,
 } from 'framer-motion'
 import { Btn, ease } from './UI'
 import { Icon } from './Icons'
 import { marquee, profile } from '../data'
+import { srcSet } from '../img'
 import { scrollToId } from '../hooks'
 
 function Letters({ word, play, delay = 0, className = '' }) {
@@ -97,119 +98,146 @@ export default function Hero({ ready, bp }) {
     my.set((e.clientY - r.top) / r.height - 0.5)
   }
 
+  // Name + intro, the longer details, and the photo stage. Phones show the photos
+  // straight after the name so the first screen isn't just text.
+  const intro = (
+    <>
+      <motion.p
+        className="eyebrow"
+        initial={{ opacity: 0, y: 16 }}
+        animate={ready ? { opacity: 1, y: 0 } : undefined}
+        transition={{ duration: 0.8, ease, delay: 0.1 }}
+      >
+        <span className="pulse" />
+        {profile.role} at {profile.company}
+      </motion.p>
+
+      <h1 className="hero__name" aria-label={profile.full}>
+        <Letters word={profile.first} play={ready} delay={0.15} />
+        <span className="hero__line2">
+          <motion.span
+            className="hero__k serif"
+            initial={{ opacity: 0, rotate: -20, scale: 0.6 }}
+            animate={ready ? { opacity: 1, rotate: 0, scale: 1 } : undefined}
+            transition={{ duration: 1, ease, delay: 0.55 }}
+            aria-hidden="true"
+          >
+            K.
+          </motion.span>
+          <Letters word={profile.last} play={ready} delay={0.35} />
+        </span>
+      </h1>
+    </>
+  )
+  const details = (
+    <>
+      <motion.p
+        className="hero__lede"
+        initial={{ opacity: 0, y: 24 }}
+        animate={ready ? { opacity: 1, y: 0 } : undefined}
+        transition={{ duration: 0.9, ease, delay: 0.75 }}
+      >
+        I build web products that feel quick and considered — React and Angular up front,
+        Python and Django underneath. Engineering at Quest Innovative Solutions in Kochi
+        since <b>{profile.since}</b>.
+      </motion.p>
+
+      <motion.div
+        className="hero__ctas"
+        initial={{ opacity: 0, y: 24 }}
+        animate={ready ? { opacity: 1, y: 0 } : undefined}
+        transition={{ duration: 0.9, ease, delay: 0.9 }}
+      >
+        <Btn href="#work" cursor="View">Selected work</Btn>
+        <Btn href="#contact" variant="ghost" icon="send">Get in touch</Btn>
+      </motion.div>
+
+      <motion.dl
+        className="hero__meta"
+        initial={{ opacity: 0 }}
+        animate={ready ? { opacity: 1 } : undefined}
+        transition={{ duration: 1, delay: 1.1 }}
+      >
+        <div><dt>Based in</dt><dd>{profile.location}</dd></div>
+        <div><dt>Currently</dt><dd>Software Engineer</dd></div>
+        <div><dt>Stack</dt><dd>React · Django</dd></div>
+      </motion.dl>
+    </>
+  )
+  const stage = (
+  <div className="hero__stage">
+    <motion.div
+      className="frame frame--main"
+      style={{ y: yMain, rotateX: tiltX, rotateY: tiltY }}
+      initial={{ clipPath: 'inset(100% 0% 0% 0% round 999px 999px 28px 28px)' }}
+      animate={ready ? { clipPath: 'inset(0% 0% 0% 0% round 999px 999px 28px 28px)' } : undefined}
+      transition={{ duration: 1.4, ease: [0.76, 0, 0.24, 1], delay: 0.3 }}
+    >
+      <motion.img
+        src="/img/forest.webp"
+        srcSet={srcSet('/img/forest.webp')}
+        sizes="(max-width: 639px) 84vw, (max-width: 1023px) 70vw, 36vw"
+        decoding="async"
+        alt="Sharon K Varghese, Software Engineer in Kochi"
+        fetchPriority="high"
+        style={{ scale: imgScale }}
+      />
+    </motion.div>
+
+    <motion.div className="frame-pos frame-pos--a" style={{ y: yA, x: shiftA }}>
+      <motion.div
+        className="frame frame--polaroid"
+        style={{ rotate: rA }}
+        initial={{ opacity: 0, scale: 0.7 }}
+        animate={ready ? { opacity: 1, scale: 1 } : undefined}
+        transition={{ duration: 1.1, ease, delay: 0.9 }}
+      >
+        <img src="/img/park-2.webp" srcSet={srcSet('/img/park-2.webp')} sizes="(max-width: 639px) 52vw, 22vw" alt="Sharon Varghese outdoors" loading="lazy" decoding="async" />
+        <span className="frame__cap">outdoors, 2025</span>
+      </motion.div>
+    </motion.div>
+
+    <motion.div className="frame-pos frame-pos--b" style={{ y: yB, x: shiftB }}>
+      <motion.div
+        className="frame frame--stamp"
+        style={{ rotate: rB }}
+        initial={{ opacity: 0, scale: 0.7 }}
+        animate={ready ? { opacity: 1, scale: 1 } : undefined}
+        transition={{ duration: 1.1, ease, delay: 1.05 }}
+      >
+        <img src="/img/studio-face.webp" alt="Sharon Varghese (sh46on) — portrait" decoding="async" />
+      </motion.div>
+    </motion.div>
+
+    <motion.div
+      className="hero__badge"
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={ready ? { opacity: 1, scale: 1 } : undefined}
+      transition={{ duration: 1, ease, delay: 1.2 }}
+    >
+      <Badge />
+    </motion.div>
+  </div>
+  )
+
   return (
     <section id="home" className="hero" ref={ref} onPointerMove={onMove}>
       <div className="container hero__grid">
-        <motion.div className="hero__copy" style={{ y: yCopy, opacity: fade }}>
-          <motion.p
-            className="eyebrow"
-            initial={{ opacity: 0, y: 16 }}
-            animate={ready ? { opacity: 1, y: 0 } : undefined}
-            transition={{ duration: 0.8, ease, delay: 0.1 }}
-          >
-            <span className="pulse" />
-            {profile.role} at {profile.company}
-          </motion.p>
-
-          <h1 className="hero__name" aria-label={profile.full}>
-            <Letters word={profile.first} play={ready} delay={0.15} />
-            <span className="hero__line2">
-              <motion.span
-                className="hero__k serif"
-                initial={{ opacity: 0, rotate: -20, scale: 0.6 }}
-                animate={ready ? { opacity: 1, rotate: 0, scale: 1 } : undefined}
-                transition={{ duration: 1, ease, delay: 0.55 }}
-                aria-hidden="true"
-              >
-                K.
-              </motion.span>
-              <Letters word={profile.last} play={ready} delay={0.35} />
-            </span>
-          </h1>
-
-          <motion.p
-            className="hero__lede"
-            initial={{ opacity: 0, y: 24 }}
-            animate={ready ? { opacity: 1, y: 0 } : undefined}
-            transition={{ duration: 0.9, ease, delay: 0.75 }}
-          >
-            I build web products that feel quick and considered — React and Angular up front,
-            Python and Django underneath. Engineering at Quest Innovative Solutions in Kochi
-            since <b>{profile.since}</b>.
-          </motion.p>
-
-          <motion.div
-            className="hero__ctas"
-            initial={{ opacity: 0, y: 24 }}
-            animate={ready ? { opacity: 1, y: 0 } : undefined}
-            transition={{ duration: 0.9, ease, delay: 0.9 }}
-          >
-            <Btn href="#work" cursor="View">Selected work</Btn>
-            <Btn href="#contact" variant="ghost" icon="send">Get in touch</Btn>
-          </motion.div>
-
-          <motion.dl
-            className="hero__meta"
-            initial={{ opacity: 0 }}
-            animate={ready ? { opacity: 1 } : undefined}
-            transition={{ duration: 1, delay: 1.1 }}
-          >
-            <div><dt>Based in</dt><dd>{profile.location}</dd></div>
-            <div><dt>Currently</dt><dd>Software Engineer</dd></div>
-            <div><dt>Stack</dt><dd>React · Django</dd></div>
-          </motion.dl>
-        </motion.div>
-
-        <div className="hero__stage">
-          <motion.div
-            className="frame frame--main"
-            style={{ y: yMain, rotateX: tiltX, rotateY: tiltY }}
-            initial={{ clipPath: 'inset(100% 0% 0% 0% round 999px 999px 28px 28px)' }}
-            animate={ready ? { clipPath: 'inset(0% 0% 0% 0% round 999px 999px 28px 28px)' } : undefined}
-            transition={{ duration: 1.4, ease: [0.76, 0, 0.24, 1], delay: 0.3 }}
-          >
-            <motion.img
-              src="/img/forest.webp"
-              alt="Sharon K Varghese, Software Engineer in Kochi"
-              fetchPriority="high"
-              style={{ scale: imgScale }}
-            />
-          </motion.div>
-
-          <motion.div className="frame-pos frame-pos--a" style={{ y: yA, x: shiftA }}>
-            <motion.div
-              className="frame frame--polaroid"
-              style={{ rotate: rA }}
-              initial={{ opacity: 0, scale: 0.7 }}
-              animate={ready ? { opacity: 1, scale: 1 } : undefined}
-              transition={{ duration: 1.1, ease, delay: 0.9 }}
-            >
-              <img src="/img/park-2.webp" alt="Sharon Varghese outdoors" loading="lazy" />
-              <span className="frame__cap">outdoors, 2025</span>
+        {bp === 'mobile' ? (
+          <>
+            <motion.div className="hero__copy" style={{ y: yCopy, opacity: fade }}>{intro}</motion.div>
+            {stage}
+            <div className="hero__copy hero__copy--details">{details}</div>
+          </>
+        ) : (
+          <>
+            <motion.div className="hero__copy" style={{ y: yCopy, opacity: fade }}>
+              {intro}
+              {details}
             </motion.div>
-          </motion.div>
-
-          <motion.div className="frame-pos frame-pos--b" style={{ y: yB, x: shiftB }}>
-            <motion.div
-              className="frame frame--stamp"
-              style={{ rotate: rB }}
-              initial={{ opacity: 0, scale: 0.7 }}
-              animate={ready ? { opacity: 1, scale: 1 } : undefined}
-              transition={{ duration: 1.1, ease, delay: 1.05 }}
-            >
-              <img src="/img/studio-face.webp" alt="Sharon Varghese (sh46on) — portrait" />
-            </motion.div>
-          </motion.div>
-
-          <motion.div
-            className="hero__badge"
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={ready ? { opacity: 1, scale: 1 } : undefined}
-            transition={{ duration: 1, ease, delay: 1.2 }}
-          >
-            <Badge />
-          </motion.div>
-        </div>
+            {stage}
+          </>
+        )}
       </div>
     </section>
   )
@@ -229,8 +257,12 @@ function MarqueeRow({ items, base = -2, className }) {
   const factor = useTransform(smooth, [0, 1000], [0, 4], { clamp: false })
   const x = useTransform(baseX, (v) => `${wrap(-25, -50, v)}%`)
   const dir = useRef(1)
+  const row = useRef(null)
+  // Only run the per-frame loop while the row is on screen.
+  const visible = useInView(row, { margin: '100px 0px' })
 
   useAnimationFrame((_, delta) => {
+    if (!visible) return
     let move = dir.current * base * (delta / 1000)
     const f = factor.get()
     if (f < 0) dir.current = -1
@@ -240,7 +272,7 @@ function MarqueeRow({ items, base = -2, className }) {
   })
 
   return (
-    <div className={`marquee ${className}`}>
+    <div className={`marquee ${className}`} ref={row}>
       <motion.div className="marquee__track" style={{ x }}>
         {[0, 1, 2, 3].map((k) => (
           <span key={k} className="marquee__set" aria-hidden={k > 0}>

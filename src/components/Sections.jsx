@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { AnimatePresence, motion, useScroll, useSpring, useTransform } from 'framer-motion'
+import { AnimatePresence, motion, useMotionValueEvent, useScroll, useSpring, useTransform } from 'framer-motion'
 import { Btn, ease, Reveal, SectionHead, SplitWords } from './UI'
 import { Icon } from './Icons'
 import { certifications, earlier, education, experience, links, profile, skills } from '../data'
@@ -63,17 +63,20 @@ export function Journey({ bp }) {
 /* ---------- Toolkit ---------- */
 function Tile({ s, i }) {
   const ref = useRef(null)
-  const [pos, setPos] = useState({ x: 50, y: 50 })
+  // Update the glow position directly on the element (no React re-render per mouse move).
   const onMove = (e) => {
-    const r = ref.current.getBoundingClientRect()
-    setPos({ x: ((e.clientX - r.left) / r.width) * 100, y: ((e.clientY - r.top) / r.height) * 100 })
+    if (e.pointerType !== 'mouse') return
+    const el = ref.current
+    const r = el.getBoundingClientRect()
+    el.style.setProperty('--mx', `${((e.clientX - r.left) / r.width) * 100}%`)
+    el.style.setProperty('--my', `${((e.clientY - r.top) / r.height) * 100}%`)
   }
   return (
     <motion.div
       ref={ref}
       className={`tile ${s.span === 'wide' ? 'tile--wide' : ''}`}
       onPointerMove={onMove}
-      style={{ '--mx': `${pos.x}%`, '--my': `${pos.y}%` }}
+      style={{ '--mx': '50%', '--my': '50%' }}
       initial={{ opacity: 0, y: 50, scale: 0.96 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: '0px 0px -10% 0px' }}
@@ -101,7 +104,30 @@ function Tile({ s, i }) {
   )
 }
 
-export function Toolkit() {
+// Phones: the same tiles as a horizontal swipe deck, with a label strip like the project cards.
+function SkillDeck() {
+  const deck = useRef(null)
+  const { scrollXProgress } = useScroll({ container: deck })
+  const [idx, setIdx] = useState(0)
+  useMotionValueEvent(scrollXProgress, 'change', (v) => {
+    const next = Math.round(v * (skills.length - 1))
+    setIdx((cur) => (cur === next ? cur : next))
+  })
+  return (
+    <>
+      <div className="bento bento--deck" ref={deck}>
+        {skills.map((s, i) => <Tile key={s.title} s={s} i={i} />)}
+      </div>
+      <div className="swipe__dots" aria-hidden="true">
+        {skills.map((s, i) => (
+          <span key={s.title} className={i === idx ? 'on' : ''}>{i === idx ? s.title : ''}</span>
+        ))}
+      </div>
+    </>
+  )
+}
+
+export function Toolkit({ bp }) {
   return (
     <section id="skills" className="section toolkit">
       <div className="container">
@@ -111,9 +137,13 @@ export function Toolkit() {
           title="Tools I reach for, *daily*."
           aside={<p>Full-stack by training, frontend by obsession. Languages: Malayalam, English and Hindi.</p>}
         />
-        <div className="bento">
-          {skills.map((s, i) => <Tile key={s.title} s={s} i={i} />)}
-        </div>
+        {bp === 'mobile' ? (
+          <SkillDeck />
+        ) : (
+          <div className="bento">
+            {skills.map((s, i) => <Tile key={s.title} s={s} i={i} />)}
+          </div>
+        )}
       </div>
     </section>
   )

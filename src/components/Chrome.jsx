@@ -245,13 +245,26 @@ export function Header({ bp, theme, toggle, ready }) {
 /* ---------- Mobile: slim top bar + bottom dock ---------- */
 export function MobileChrome({ theme, toggle, ready }) {
   const active = useActiveSection(ids)
+  // Slide the bars away while reading (scrolling down); bring them back on any scroll up,
+  // near the top, and at the very end of the page.
+  const { scrollY } = useScroll()
+  const [tucked, setTucked] = useState(false)
+  useMotionValueEvent(scrollY, 'change', (v) => {
+    const delta = v - (scrollY.getPrevious() ?? 0)
+    if (Math.abs(delta) < 6) return
+    const nearEnd = v > document.documentElement.scrollHeight - window.innerHeight - 80
+    const next = delta > 0 && v > 320 && !nearEnd
+    setTucked((cur) => (cur === next ? cur : next))
+  })
+  const show = ready && !tucked
+
   return (
     <>
       <motion.header
         className="mbar"
         initial={{ y: -80 }}
-        animate={{ y: ready ? 0 : -80 }}
-        transition={{ duration: 0.6, ease }}
+        animate={{ y: show ? 0 : -90 }}
+        transition={{ duration: 0.5, ease }}
       >
         <Brand />
         <ThemeToggle theme={theme} toggle={toggle} />
@@ -261,8 +274,8 @@ export function MobileChrome({ theme, toggle, ready }) {
         className="dock"
         aria-label="Primary"
         initial={{ y: 120 }}
-        animate={{ y: ready ? 0 : 120 }}
-        transition={{ duration: 0.7, ease, delay: 0.2 }}
+        animate={{ y: show ? 0 : 130 }}
+        transition={{ duration: 0.55, ease, delay: ready && !tucked ? 0.05 : 0 }}
       >
         {nav.map((n) => (
           <a

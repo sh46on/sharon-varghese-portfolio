@@ -223,6 +223,12 @@ function draw(ctx, w, h, dpr, frame, model, colors) {
   ctx.globalAlpha = 1
 }
 
+// Canvas sharpness: 2x on larger screens, 1.5x on phones (about 44% fewer pixels to fill;
+// the particles are tiny dots, so it looks the same).
+function canvasDpr() {
+  return Math.min(window.innerWidth < 640 ? 1.5 : 2, window.devicePixelRatio || 1)
+}
+
 function readColors() {
   const cs = getComputedStyle(document.documentElement)
   return { ink: cs.getPropertyValue('--ink').trim(), accent: cs.getPropertyValue('--accent').trim() }
@@ -258,10 +264,21 @@ export default function Film({ bp }) {
   const { scrollYProgress } = useScroll({ target: section, offset: ['start start', 'end end'] })
   const smooth = useSpring(scrollYProgress, { stiffness: 140, damping: 30, mass: 0.35 })
 
+  const ctx = useRef(null)
+  const queued = useRef(false)
+
   const paint = () => {
+    queued.current = false
     const c = canvas.current
     if (!c) return
-    draw(c.getContext('2d'), c.width, c.height, Math.min(2, window.devicePixelRatio || 1), frameRef.current, model.current, colors.current || readColors())
+    if (!ctx.current) ctx.current = c.getContext('2d')
+    draw(ctx.current, c.width, c.height, canvasDpr(), frameRef.current, model.current, colors.current || readColors())
+  }
+  // Coalesce redraw requests: at most one paint per animation frame.
+  const requestPaint = () => {
+    if (queued.current) return
+    queued.current = true
+    requestAnimationFrame(paint)
   }
 
   const setFrame = (fr) => {
@@ -272,7 +289,7 @@ export default function Film({ bp }) {
     const p = fr / (FRAMES - 1)
     const sc = p < 0.2 ? 0 : p < 0.5 ? 1 : p < 0.8 ? 2 : 3
     setScene((s) => (s === sc ? s : sc))
-    requestAnimationFrame(paint)
+    requestPaint()
   }
 
   useMotionValueEvent(smooth, 'change', (v) => {
@@ -295,7 +312,7 @@ export default function Film({ bp }) {
   useEffect(() => {
     const c = canvas.current
     const fit = () => {
-      const dpr = Math.min(2, window.devicePixelRatio || 1)
+      const dpr = canvasDpr()
       const r = c.getBoundingClientRect()
       c.width = Math.round(r.width * dpr)
       c.height = Math.round(r.height * dpr)

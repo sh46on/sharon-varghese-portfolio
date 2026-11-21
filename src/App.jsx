@@ -65,7 +65,7 @@ export default function App() {
         <About bp={bp} />
         <Gallery bp={bp} />
         <Journey bp={bp} />
-        <Toolkit />
+        <Toolkit bp={bp} />
         <Earlier bp={bp} key={`earlier-${bp}`} />
         <Learning />
         <Contact />

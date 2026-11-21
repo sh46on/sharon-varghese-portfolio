@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef, useState } from 'react'
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion'
 import { SplitWords } from './UI'
 import { gallery } from '../data'
+import { srcSet } from '../img'
 
 function HFrame({ f, i, progress }) {
   const y = useTransform(progress, [0, 1], f.y)
@@ -10,7 +11,7 @@ function HFrame({ f, i, progress }) {
   return (
     <motion.figure className="gframe" style={{ y, rotate, width: `${f.w}vw` }}>
       <div className="gframe__img" style={{ aspectRatio: f.ratio }}>
-        <motion.img src={f.src} alt={`Sharon Varghese — ${f.caption}`} style={{ x: imgX, objectPosition: f.pos }} loading="lazy" />
+        <motion.img src={f.src} srcSet={srcSet(f.src)} sizes={`${Math.round(f.w * 1.2)}vw`} alt={`Sharon Varghese — ${f.caption}`} style={{ x: imgX, objectPosition: f.pos }} loading="lazy" decoding="async" />
       </div>
       <figcaption>
         <span>{String(i + 1).padStart(2, '0')}</span>
@@ -72,7 +73,7 @@ function VFrame({ f, i }) {
   return (
     <motion.figure ref={ref} className={`vframe ${portrait ? 'vframe--tall' : ''}`} style={{ x, rotate }}>
       <div className="gframe__img" style={{ aspectRatio: f.ratio }}>
-        <motion.img src={f.src} alt={`Sharon Varghese — ${f.caption}`} style={{ y: imgY, scale: 1.2, objectPosition: f.pos }} loading="lazy" />
+        <motion.img src={f.src} srcSet={srcSet(f.src)} sizes="(max-width: 639px) 56vw, 54vw" alt={`Sharon Varghese — ${f.caption}`} style={{ y: imgY, scale: 1.2, objectPosition: f.pos }} loading="lazy" decoding="async" />
       </div>
       <figcaption>
         <span>{String(i + 1).padStart(2, '0')}</span>

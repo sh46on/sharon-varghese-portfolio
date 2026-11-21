@@ -96,24 +96,27 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 
 ::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
 
-.grain {
-  position: fixed; inset: 0; z-index: 90; pointer-events: none; opacity: 0.06;
+/* Film grain. The noise layer is moved with transform (handled by the GPU) instead of
+   background-position, so it no longer repaints the whole screen while it animates. */
+.grain { position: fixed; inset: 0; z-index: 90; pointer-events: none; overflow: hidden; opacity: 0.06; contain: strict; }
+.grain::before {
+  content: ''; position: absolute; inset: -60px;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  animation: grain 1.2s steps(6) infinite;
+  animation: grain 1.2s steps(6) infinite; will-change: transform;
 }
 :root[data-theme='dark'] .grain { opacity: 0.08; }
 @keyframes grain {
-  0%, 100% { background-position: 0 0; }
-  20% { background-position: -40px 30px; }
-  40% { background-position: 30px -50px; }
-  60% { background-position: -20px -10px; }
-  80% { background-position: 50px 40px; }
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  20% { transform: translate3d(-40px, 30px, 0); }
+  40% { transform: translate3d(30px, -50px, 0); }
+  60% { transform: translate3d(-20px, -10px, 0); }
+  80% { transform: translate3d(50px, 40px, 0); }
 }
 
 /* split text */
 .split { display: inline; }
 .split__mask { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.08em; margin-bottom: -0.08em; }
-.split__mask > span { display: inline-block; will-change: transform; }
+.split__mask > span { display: inline-block; }
 .split__word.serif { padding-right: 0.06em; }
 
 .pulse {
@@ -367,7 +370,7 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
    ========================================================= */
 .marquees { position: relative; padding: 40px 0 20px; overflow: hidden; }
 .marquee { overflow: hidden; white-space: nowrap; display: flex; }
-.marquee__track { display: flex; flex-wrap: nowrap; }
+.marquee__track { display: flex; flex-wrap: nowrap; will-change: transform; }
 .marquee__set { display: flex; flex: none; }
 .marquee__item { display: inline-flex; align-items: center; gap: 0.5em; padding-right: 0.5em; font-family: var(--f-display); font-weight: 650; letter-spacing: -0.04em; font-size: clamp(2.2rem, 6vw, 5.5rem); line-height: 1.15; }
 .marquee__star { width: 0.42em; height: 0.42em; fill: var(--accent); flex: none; }
@@ -898,7 +901,10 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
   .hero__ctas .btn { justify-content: space-between; }
   .hero__meta { gap: 14px 24px; margin-top: 32px; }
   .hero__meta div:last-child { display: none; }
-  .hero__stage { width: 100%; height: 118vw; max-height: 560px; margin-top: 36px; }
+  .hero__stage { width: 100%; height: 118vw; max-height: 560px; margin-top: 28px; }
+  /* Phones: name → photos → intro text and buttons. */
+  .hero__copy--details { margin-top: 52px; }
+  .hero__copy--details .hero__lede { margin-top: 0; }
   .frame--main { inset: 0 6% 0 10%; }
   .frame-pos--a { left: -4%; width: 52%; bottom: 4%; }
   .frame-pos--b { right: -2%; width: 30%; }
@@ -948,6 +954,13 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
   .tl__ghost { display: none; }
 
   .bento { grid-template-columns: 1fr; }
+  .bento--deck {
+    display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory;
+    margin: 0 calc(var(--gutter) * -1); padding: 4px var(--gutter) 8px;
+    scrollbar-width: none; overscroll-behavior-x: contain;
+  }
+  .bento--deck::-webkit-scrollbar { display: none; }
+  .bento--deck .tile { flex: 0 0 84%; scroll-snap-align: center; min-height: 270px; }
   .tile, .tile--wide { grid-column: span 1; min-height: 0; padding: 22px; }
 
   .row__btn { grid-template-columns: 34px 1fr 40px; gap: 12px; padding: 22px 4px; }
@@ -976,5 +989,5 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .grain, .badge__ring, .badge__ticks, .pulse::after { animation: none; }
+  .grain::before, .badge__ring, .badge__ticks, .pulse::after { animation: none; }
 }
