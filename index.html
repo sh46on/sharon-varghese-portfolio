@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Sharon K Varghese — Software Engineer</title>
+    <meta name="description" content="Sharon K Varghese — Software Engineer at Quest Innovative Solutions, Kochi. React, Angular and Django developer building fast, considered web products." />
+    <meta name="theme-color" content="#F2EEE6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0D0E0C" media="(prefers-color-scheme: dark)" />
+    <meta property="og:title" content="Sharon K Varghese — Software Engineer" />
+    <meta property="og:description" content="Fast, considered web products. React up front, Django underneath." />
+    <meta property="og:image" content="/img/park-1.webp" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      // Set the theme before first paint so there is no flash.
+      (function () {
+        var t = null
+        try { t = localStorage.getItem('theme') } catch (e) {}
+        if (t !== 'light' && t !== 'dark') {
+          t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        }
+        document.documentElement.setAttribute('data-theme', t)
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
