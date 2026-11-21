@@ -338,11 +338,28 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
   clip-path: polygon(3% 0, 97% 4%, 100% 50%, 96% 100%, 4% 96%, 0 50%);
 }
 .hero__badge { position: absolute; right: 2%; bottom: -2%; z-index: 3; }
-.badge { position: relative; display: grid; place-items: center; width: 128px; height: 128px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); box-shadow: var(--shadow); }
-.badge__ring { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 16s linear infinite; }
-.badge__ring text { font-family: var(--f-mono); font-size: 10.4px; letter-spacing: 0.18em; fill: currentColor; }
-.badge__core { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: var(--accent-ink); color: var(--accent); transition: transform 0.5s var(--ease); }
-.badge:hover .badge__core { transform: translateY(4px); }
+.badge {
+  position: relative; display: grid; place-items: center; width: 136px; height: 136px; border-radius: 50%;
+  background: var(--accent); color: var(--accent-ink);
+  box-shadow: var(--shadow), inset 0 0 0 1px color-mix(in srgb, var(--accent-ink) 18%, transparent);
+  transition: transform 0.6s var(--ease);
+}
+.badge:hover { transform: scale(1.06) rotate(-6deg); }
+.badge__svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.badge__ring, .badge__ticks { transform-box: view-box; transform-origin: 60px 60px; }
+.badge__ring { animation: spin 18s linear infinite; }
+.badge__ring text { font-family: var(--f-mono); font-size: 9.6px; font-weight: 500; fill: currentColor; dominant-baseline: middle; }
+.badge__star { fill: color-mix(in srgb, currentColor 55%, transparent); font-size: 8px; }
+.badge__ticks { animation: spin 30s linear infinite reverse; }
+.badge__ticks circle { fill: none; stroke: currentColor; stroke-opacity: 0.45; stroke-width: 3; stroke-dasharray: 0.7 2.86; }
+.badge__inner { fill: none; stroke: currentColor; stroke-opacity: 0.25; stroke-width: 1; }
+.badge__core {
+  position: relative; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%;
+  background: var(--accent-ink); color: var(--accent); transition: transform 0.5s var(--ease);
+}
+.badge:hover .badge__core { transform: rotate(6deg); }
+.badge:hover .badge__core svg { animation: nudge 0.9s var(--ease) infinite; }
+@keyframes nudge { 0%, 100% { transform: translateY(-2px); } 50% { transform: translateY(4px); } }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* =========================================================
@@ -729,12 +746,44 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
    ========================================================= */
 .learning__grid { display: grid; grid-template-columns: 1.4fr 0.6fr; gap: clamp(24px, 4vw, 60px); }
 .certs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.cert { display: grid; grid-template-columns: 44px 1fr auto; gap: 14px; align-items: center; padding: 18px; border-radius: 18px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); transition: transform 0.5s var(--ease), box-shadow 0.4s; }
-.cert:hover { transform: translateY(-4px); box-shadow: inset 0 0 0 1px var(--accent); }
+.cert { display: grid; grid-template-columns: 44px 1fr auto; gap: 14px; align-items: center; padding: 18px; border-radius: 18px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); transition: translate 0.5s var(--ease), box-shadow 0.4s; }
+.cert { position: relative; }
+.cert--link:hover { translate: 0 -4px; box-shadow: inset 0 0 0 1px var(--accent); }
+.cert__link { position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+.cert__link:focus-visible { outline-offset: 2px; }
+/* Preview arrow: sits in the empty corner under the date, so the card keeps its size. */
+.cert__peek {
+  position: absolute; right: 14px; bottom: 14px; z-index: 2;
+  width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+  color: var(--ink-2); box-shadow: inset 0 0 0 1px var(--line-2); background: var(--card);
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s, transform 0.45s var(--ease);
+}
+.cert__peek:hover, .cert__peek:focus-visible { background: var(--accent); color: var(--accent-ink); box-shadow: none; transform: rotate(45deg); }
+
+.lightbox {
+  position: fixed; inset: 0; z-index: 180; display: grid; place-items: center;
+  padding: clamp(16px, 5vw, 64px);
+  background: rgba(7, 8, 10, 0.72);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+.lightbox__fig {
+  position: relative; width: min(980px, 100%); max-height: 100%; display: flex; flex-direction: column;
+  padding: 12px; border-radius: 22px; background: var(--card); box-shadow: 0 40px 90px -20px rgba(0, 0, 0, 0.6);
+}
+.lightbox__fig img { width: 100%; height: auto; max-height: calc(100vh - 210px); max-height: calc(100svh - 210px); object-fit: contain; border-radius: 12px; background: #fff; }
+.lightbox__fig figcaption { display: flex; flex-direction: column; gap: 2px; padding: 14px 8px 4px; }
+.lightbox__fig figcaption b { font-weight: 600; font-size: 15.5px; }
+.lightbox__fig figcaption small { color: var(--muted); font-size: 13px; }
+.lightbox__close {
+  position: absolute; top: -16px; right: -16px; width: 44px; height: 44px; border-radius: 50%;
+  display: grid; place-items: center; background: var(--ink); color: var(--bg);
+  box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.5); transition: transform 0.4s var(--ease), background 0.3s;
+}
+.lightbox__close:hover { transform: rotate(90deg); background: var(--accent); color: var(--accent-ink); }
 .cert__seal { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-family: var(--f-serif); font-style: italic; font-size: 22px; background: var(--bg); box-shadow: inset 0 0 0 1px var(--line-2), inset 0 0 0 4px var(--bg), inset 0 0 0 5px var(--line); color: var(--accent); }
+.cert__when { font-family: var(--f-mono); font-size: 11px; color: var(--muted); white-space: nowrap; align-self: start; }
 .cert b { display: block; font-weight: 600; font-size: 14.5px; line-height: 1.3; }
 .cert small { display: block; color: var(--muted); font-size: 12.5px; margin-top: 3px; }
-.cert__when { font-family: var(--f-mono); font-size: 11px; color: var(--muted); white-space: nowrap; align-self: start; }
 .edu { display: flex; flex-direction: column; gap: 12px; }
 .edu__card { position: relative; padding: 24px; border-radius: 22px; background: var(--ink); color: var(--bg); overflow: hidden; }
 .edu__card:nth-child(2) { background: var(--moss); color: var(--bg); }
@@ -775,6 +824,8 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 
 .footer { background: var(--ink); color: var(--bg); padding: 28px 0 0; overflow: hidden; }
 .footer__row { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; font-size: 13px; padding-top: 24px; border-top: 1px solid color-mix(in srgb, var(--bg) 14%, transparent); opacity: 0.85; }
+.footer__handle { font-family: var(--f-mono); font-size: 12px; color: var(--accent); }
+.footer__handle:hover { text-decoration: underline; }
 .footer__clock { display: inline-flex; align-items: center; gap: 10px; font-family: var(--f-mono); font-size: 12px; }
 .footer__top { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--bg) 25%, transparent); transition: background 0.3s, color 0.3s; }
 .footer__top:hover { background: var(--bg); color: var(--ink); }
@@ -854,8 +905,8 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
   .frame__cap { font-size: 15px; }
   .frame--polaroid { padding: 7px 7px 30px; }
   .hero__badge { right: 0; bottom: -6%; }
-  .badge { width: 96px; height: 96px; }
-  .badge__core { width: 36px; height: 36px; }
+  .badge { width: 104px; height: 104px; }
+  .badge__core { width: 34px; height: 34px; }
 
   .marquees { padding-top: 24px; }
   .film { height: 440vh; }
@@ -905,6 +956,9 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 
   .certs { grid-template-columns: 1fr; }
   .edu { flex-direction: column; }
+  .lightbox { padding: 12px; }
+  .lightbox__fig { padding: 8px; border-radius: 18px; }
+  .lightbox__close { top: 14px; right: 14px; width: 38px; height: 38px; }
 
   .contact__title { font-size: clamp(2.8rem, 14vw, 4.4rem); }
   .contact__cta { gap: 20px; }
@@ -922,5 +976,5 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .grain, .badge__ring, .pulse::after { animation: none; }
+  .grain, .badge__ring, .badge__ticks, .pulse::after { animation: none; }
 }

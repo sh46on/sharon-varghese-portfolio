@@ -1,23 +1,168 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" prefix="og: https://ogp.me/ns# profile: https://ogp.me/ns/profile#">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Sharon K Varghese — Software Engineer</title>
-    <meta name="description" content="Sharon K Varghese — Software Engineer at Quest Innovative Solutions, Kochi. React, Angular and Django developer building fast, considered web products." />
+
+    <!-- %SITE_URL% is replaced at build time with the live site address (see vite.config.js). -->
+    <title>Sharon K Varghese (sh46on) — Software Engineer in Kochi | React &amp; Django Developer</title>
+    <meta name="description" content="Sharon K Varghese (sh46on, sh.46.on, SV) is a Software Engineer at Quest Innovative Solutions in Kochi, Kerala, building fast web products with React, Angular, Python and Django. See projects, experience and contact links." />
+    <meta name="keywords" content="Sharon, Sharon Varghese, Sharon K Varghese, sh46on, sh.46.on, SV, sharonvargheseofficial, Sharon Varghese portfolio, Sharon Varghese software engineer, Sharon Varghese Kochi, Sharon Varghese Kerala, Sharon Varghese React developer, Sharon Varghese Django developer, Quest Innovative Solutions, Deals by KEQA, DQD Gaming, Loveland Holidays" />
+    <meta name="author" content="Sharon K Varghese" />
+    <meta name="creator" content="Sharon K Varghese (sh46on)" />
+    <meta name="publisher" content="Sharon K Varghese" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow, max-image-preview:large" />
+    <meta name="bingbot" content="index, follow" />
+    <link rel="canonical" href="%SITE_URL%/" />
+    <link rel="alternate" hreflang="en" href="%SITE_URL%/" />
+    <link rel="alternate" hreflang="x-default" href="%SITE_URL%/" />
+
+    <!-- Location -->
+    <meta name="geo.region" content="IN-KL" />
+    <meta name="geo.placename" content="Kochi, Kerala, India" />
+    <meta name="geo.position" content="9.9312;76.2673" />
+    <meta name="ICBM" content="9.9312, 76.2673" />
+
+    <!-- Search engine ownership verification: paste each tool's token, then uncomment.
+    <meta name="google-site-verification" content="" />
+    <meta name="msvalidate.01" content="" />
+    <meta name="yandex-verification" content="" />
+    <meta name="baidu-site-verification" content="" />
+    -->
+
+    <!-- Icons & app -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="application-name" content="Sharon K Varghese" />
+    <meta name="apple-mobile-web-app-title" content="SV" />
     <meta name="theme-color" content="#F2EEE6" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0D0E0C" media="(prefers-color-scheme: dark)" />
-    <meta property="og:title" content="Sharon K Varghese — Software Engineer" />
-    <meta property="og:description" content="Fast, considered web products. React up front, Django underneath." />
-    <meta property="og:image" content="/img/park-1.webp" />
+
+    <!-- Open Graph (Facebook, LinkedIn, WhatsApp, Google) -->
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content="Sharon K Varghese" />
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:url" content="%SITE_URL%/" />
+    <meta property="og:title" content="Sharon K Varghese (sh46on) — Software Engineer" />
+    <meta property="og:description" content="Software Engineer at Quest Innovative Solutions, Kochi. React, Angular and Django — builder of Deals by KEQA, DQD Gaming and Loveland Holidays." />
+    <meta property="og:image" content="%SITE_URL%/og-image.jpg" />
+    <meta property="og:image:secure_url" content="%SITE_URL%/og-image.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Sharon K Varghese — Software Engineer, Kochi" />
+    <meta property="profile:first_name" content="Sharon" />
+    <meta property="profile:last_name" content="Varghese" />
+    <meta property="profile:username" content="sh46on" />
+    <meta property="article:author" content="https://www.facebook.com/sh.46.on" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Sharon K Varghese (sh46on) — Software Engineer" />
+    <meta name="twitter:description" content="React, Angular and Django developer in Kochi. Projects, experience and contact." />
+    <meta name="twitter:image" content="%SITE_URL%/og-image.jpg" />
+    <meta name="twitter:image:alt" content="Sharon K Varghese — Software Engineer, Kochi" />
+
+    <!-- Performance: warm up fonts and the hero photo (helps Core Web Vitals) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="image" href="/img/forest.webp" type="image/webp" fetchpriority="high" />
     <link
       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Structured data: tells search engines who this page is about and links every profile. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "%SITE_URL%/#person",
+            "name": "Sharon K Varghese",
+            "givenName": "Sharon",
+            "familyName": "Varghese",
+            "additionalName": "K",
+            "alternateName": ["Sharon", "Sharon Varghese", "Sharon K. Varghese", "sh46on", "sh.46.on", "SV", "sharonvargheseofficial"],
+            "url": "%SITE_URL%/",
+            "image": {
+              "@type": "ImageObject",
+              "url": "%SITE_URL%/og-image.jpg",
+              "width": 1200,
+              "height": 630,
+              "caption": "Sharon K Varghese"
+            },
+            "jobTitle": "Software Engineer",
+            "description": "Software Engineer in Kochi, Kerala, building web products with React, Angular, Python and Django.",
+            "worksFor": {
+              "@type": "Organization",
+              "name": "Quest Innovative Solutions",
+              "address": { "@type": "PostalAddress", "addressLocality": "Kochi", "addressRegion": "Kerala", "addressCountry": "IN" }
+            },
+            "homeLocation": {
+              "@type": "Place",
+              "name": "Kochi, Kerala, India"
+            },
+            "address": { "@type": "PostalAddress", "addressLocality": "Kochi", "addressRegion": "Kerala", "addressCountry": "IN" },
+            "nationality": { "@type": "Country", "name": "India" },
+            "alumniOf": [
+              { "@type": "EducationalOrganization", "name": "Little Flower Engineering Institute, Kalamassery" },
+              { "@type": "CollegeOrUniversity", "name": "Mahatma Gandhi University" }
+            ],
+            "knowsAbout": ["React", "Angular", "JavaScript", "Python", "Django", "Django REST Framework", "REST APIs", "MySQL", "MongoDB", "Firebase", "Docker", "AWS S3", "Framer Motion", "Web Development", "Full-Stack Development"],
+            "knowsLanguage": ["English", "Malayalam", "Hindi"],
+            "hasCredential": [
+              { "@type": "EducationalOccupationalCredential", "name": "AI-Powered Software and System Design", "recognizedBy": { "@type": "Organization", "name": "DeepLearning.AI" } },
+              { "@type": "EducationalOccupationalCredential", "name": "Team Software Engineering with AI", "recognizedBy": { "@type": "Organization", "name": "DeepLearning.AI" } },
+              { "@type": "EducationalOccupationalCredential", "name": "SQL and Relational Databases 101", "recognizedBy": { "@type": "Organization", "name": "IBM" } },
+              { "@type": "EducationalOccupationalCredential", "name": "Agile Project Management", "recognizedBy": { "@type": "Organization", "name": "HP LIFE" } }
+            ],
+            "sameAs": [
+              "https://github.com/sh46on",
+              "https://www.linkedin.com/in/sharon-varghese-38ba58325/",
+              "https://www.instagram.com/sh.46.on/",
+              "https://www.instagram.com/shqronvargheseofficial/",
+              "https://www.facebook.com/sh.46.on"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "%SITE_URL%/#website",
+            "url": "%SITE_URL%/",
+            "name": "Sharon K Varghese — Portfolio",
+            "alternateName": ["sh46on", "Sharon Varghese Portfolio", "SV Portfolio"],
+            "inLanguage": "en",
+            "publisher": { "@id": "%SITE_URL%/#person" }
+          },
+          {
+            "@type": "ProfilePage",
+            "@id": "%SITE_URL%/#profilepage",
+            "url": "%SITE_URL%/",
+            "name": "Sharon K Varghese (sh46on) — Software Engineer",
+            "isPartOf": { "@id": "%SITE_URL%/#website" },
+            "mainEntity": { "@id": "%SITE_URL%/#person" },
+            "about": { "@id": "%SITE_URL%/#person" },
+            "dateModified": "%BUILD_DATE%",
+            "primaryImageOfPage": { "@type": "ImageObject", "url": "%SITE_URL%/og-image.jpg" }
+          },
+          {
+            "@type": "ItemList",
+            "name": "Projects by Sharon K Varghese",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "item": { "@type": "WebSite", "name": "Deals by KEQA", "url": "https://dealsbykeqa.com", "creator": { "@id": "%SITE_URL%/#person" } } },
+              { "@type": "ListItem", "position": 2, "item": { "@type": "WebSite", "name": "DQD Gaming", "url": "https://dqdgaming.com", "creator": { "@id": "%SITE_URL%/#person" } } },
+              { "@type": "ListItem", "position": 3, "item": { "@type": "WebSite", "name": "Loveland Holidays", "url": "https://lovelandholidays.com", "creator": { "@id": "%SITE_URL%/#person" } } }
+            ]
+          }
+        ]
+      }
+    </script>
+
     <script>
       // Set the theme before first paint so there is no flash.
       (function () {
@@ -29,9 +174,48 @@
         document.documentElement.setAttribute('data-theme', t)
       })()
     </script>
+
+    <style>
+      /* Styles for the static first paint below (replaced by the app once JS loads). */
+      .seo-static { min-height: 100vh; padding: 12vh 6vw; background: #f2eee6; color: #141511; font: 16px/1.6 system-ui, -apple-system, 'Segoe UI', sans-serif; }
+      [data-theme='dark'] .seo-static { background: #0d0e0c; color: #ede9df; }
+      .seo-static h1 { font-size: clamp(2.6rem, 8vw, 6rem); line-height: 0.95; letter-spacing: -0.04em; margin: 0 0 16px; }
+      .seo-static p, .seo-static li { max-width: 44em; opacity: 0.8; }
+      .seo-static a { color: inherit; }
+      .seo-static h2 { font-size: 1.1rem; margin: 28px 0 8px; }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!--
+        Static, crawlable version of the page. Search engines that don't run
+        JavaScript read this; for everyone else React replaces it on load.
+        Keep it in sync with src/data.js.
+      -->
+      <main class="seo-static">
+        <h1>Sharon K Varghese</h1>
+        <p><strong>Software Engineer at Quest Innovative Solutions, Kochi, Kerala.</strong> Also known online as <strong>sh46on</strong>, <strong>sh.46.on</strong> and <strong>SV</strong>.</p>
+        <p>I build web products that feel quick and considered — React and Angular up front, Python and Django underneath. Software Engineer at Quest Innovative Solutions since August 10, 2026, after a year and a half there as a Software Engineer Trainee.</p>
+        <h2>Selected work</h2>
+        <ul>
+          <li><a href="https://dealsbykeqa.com">Deals by KEQA</a> — Qatar's supermarket flyer and deals platform (web, Android and iOS) built with React and Django REST.</li>
+          <li><a href="https://dqdgaming.com">DQD Gaming</a> — booking platform for a gaming lounge with Google sign-in, events, combo packs and QR check-in.</li>
+          <li><a href="https://lovelandholidays.com">Loveland Holidays</a> — travel website for Kerala and South India tour packages with WhatsApp enquiries.</li>
+        </ul>
+        <h2>Skills</h2>
+        <p>React.js, Angular, JavaScript, HTML5, CSS3, Framer Motion, Python, Django, Django REST Framework, Flask, MySQL, MongoDB, SQLite, Git, Docker, Firebase, AWS S3.</p>
+        <h2>Find Sharon Varghese online</h2>
+        <ul>
+          <li><a href="https://github.com/sh46on" rel="me">GitHub — sh46on</a></li>
+          <li><a href="https://www.linkedin.com/in/sharon-varghese-38ba58325/" rel="me">LinkedIn — Sharon Varghese</a></li>
+          <li><a href="https://www.instagram.com/sh.46.on/" rel="me">Instagram — sh.46.on</a></li>
+          <li><a href="https://www.facebook.com/sh.46.on" rel="me">Facebook — sh.46.on</a></li>
+        </ul>
+      </main>
+    </div>
+    <noscript>
+      <p style="padding:16px;text-align:center">This portfolio is best viewed with JavaScript enabled.</p>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

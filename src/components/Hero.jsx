@@ -25,8 +25,13 @@ function Letters({ word, play, delay = 0, className = '' }) {
   )
 }
 
+// Rotating "watch bezel" badge. The ring text is stretched to exactly one
+// circumference (textLength), so it always closes into a seamless loop.
+const RING_R = 45
+const RING_LEN = 2 * Math.PI * RING_R
+
 function Badge() {
-  const text = 'SOFTWARE ENGINEER · KOCHI · SINCE 2024 · '
+  const parts = ['SOFTWARE ENGINEER', 'KOCHI', 'SINCE 2024']
   return (
     <a
       href="#work"
@@ -35,13 +40,28 @@ function Badge() {
       data-cursor="Scroll"
       aria-label="Scroll to selected work"
     >
-      <svg viewBox="0 0 120 120" className="badge__ring">
+      <svg viewBox="0 0 120 120" className="badge__svg" aria-hidden="true">
         <defs>
-          <path id="circ" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0" />
+          <path id="badge-circ" d={`M60 60m-${RING_R} 0a${RING_R} ${RING_R} 0 1 1 ${RING_R * 2} 0a${RING_R} ${RING_R} 0 1 1 -${RING_R * 2} 0`} />
         </defs>
-        <text><textPath href="#circ">{text}</textPath></text>
+        <g className="badge__ring">
+          <text>
+            <textPath href="#badge-circ" textLength={RING_LEN} lengthAdjust="spacing">
+              {parts.map((p) => (
+                <tspan key={p}>
+                  {p}
+                  <tspan className="badge__star"> ✦ </tspan>
+                </tspan>
+              ))}
+            </textPath>
+          </text>
+        </g>
+        <g className="badge__ticks">
+          <circle cx="60" cy="60" r="34" />
+        </g>
+        <circle className="badge__inner" cx="60" cy="60" r="29" />
       </svg>
-      <span className="badge__core"><Icon name="arrowDown" size={22} /></span>
+      <span className="badge__core"><Icon name="arrowDown" size={20} strokeWidth={2} /></span>
     </a>
   )
 }
@@ -148,7 +168,12 @@ export default function Hero({ ready, bp }) {
             animate={ready ? { clipPath: 'inset(0% 0% 0% 0% round 999px 999px 28px 28px)' } : undefined}
             transition={{ duration: 1.4, ease: [0.76, 0, 0.24, 1], delay: 0.3 }}
           >
-            <motion.img src="/img/forest.webp" alt="Sharon K Varghese" style={{ scale: imgScale }} />
+            <motion.img
+              src="/img/forest.webp"
+              alt="Sharon K Varghese, Software Engineer in Kochi"
+              fetchPriority="high"
+              style={{ scale: imgScale }}
+            />
           </motion.div>
 
           <motion.div className="frame-pos frame-pos--a" style={{ y: yA, x: shiftA }}>
@@ -159,7 +184,7 @@ export default function Hero({ ready, bp }) {
               animate={ready ? { opacity: 1, scale: 1 } : undefined}
               transition={{ duration: 1.1, ease, delay: 0.9 }}
             >
-              <img src="/img/park-2.webp" alt="" />
+              <img src="/img/park-2.webp" alt="Sharon Varghese outdoors" loading="lazy" />
               <span className="frame__cap">outdoors, 2025</span>
             </motion.div>
           </motion.div>
@@ -172,7 +197,7 @@ export default function Hero({ ready, bp }) {
               animate={ready ? { opacity: 1, scale: 1 } : undefined}
               transition={{ duration: 1.1, ease, delay: 1.05 }}
             >
-              <img src="/img/studio-face.webp" alt="" />
+              <img src="/img/studio-face.webp" alt="Sharon Varghese (sh46on) — portrait" />
             </motion.div>
           </motion.div>
 

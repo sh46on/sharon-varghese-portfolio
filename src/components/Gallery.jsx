@@ -10,7 +10,7 @@ function HFrame({ f, i, progress }) {
   return (
     <motion.figure className="gframe" style={{ y, rotate, width: `${f.w}vw` }}>
       <div className="gframe__img" style={{ aspectRatio: f.ratio }}>
-        <motion.img src={f.src} alt="" style={{ x: imgX, objectPosition: f.pos }} loading="lazy" />
+        <motion.img src={f.src} alt={`Sharon Varghese — ${f.caption}`} style={{ x: imgX, objectPosition: f.pos }} loading="lazy" />
       </div>
       <figcaption>
         <span>{String(i + 1).padStart(2, '0')}</span>
@@ -72,7 +72,7 @@ function VFrame({ f, i }) {
   return (
     <motion.figure ref={ref} className={`vframe ${portrait ? 'vframe--tall' : ''}`} style={{ x, rotate }}>
       <div className="gframe__img" style={{ aspectRatio: f.ratio }}>
-        <motion.img src={f.src} alt="" style={{ y: imgY, scale: 1.2, objectPosition: f.pos }} loading="lazy" />
+        <motion.img src={f.src} alt={`Sharon Varghese — ${f.caption}`} style={{ y: imgY, scale: 1.2, objectPosition: f.pos }} loading="lazy" />
       </div>
       <figcaption>
         <span>{String(i + 1).padStart(2, '0')}</span>

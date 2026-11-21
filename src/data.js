@@ -105,7 +105,7 @@ export const projects = [
       'Smooth carousels tuned for phones first',
       'SEO-friendly pages for Kerala tour searches',
     ],
-    stack: ['React', 'Responsive UI', 'SEO', 'WhatsApp lead flow'],
+    stack: ['React 18', 'Vite', 'Tailwind CSS', 'Framer Motion', 'EmailJS'],
     theme: { bg: '#0c3a31', bg2: '#13584a', ink: '#f6f1e4', accent: '#e9b949' },
   },
 ]
@@ -173,7 +173,7 @@ export const skills = [
   {
     title: 'Frontend',
     note: 'Where most of my hours go',
-    items: ['React.js', 'Angular', 'JavaScript (ES6+)', 'HTML5', 'CSS3', 'Framer Motion', 'Bootstrap 5', 'jQuery'],
+    items: ['React.js', 'Angular', 'JavaScript (ES6+)', 'HTML5', 'CSS3', 'Framer Motion', 'Bootstrap 5', 'jQuery', 'TypeScript', 'React Native'],
     span: 'wide',
   },
   {
@@ -184,7 +184,7 @@ export const skills = [
   {
     title: 'Data',
     note: 'Schemas, queries, tuning',
-    items: ['MySQL', 'MongoDB', 'SQLite'],
+    items: ['MySQL', 'PostgreSQL', 'MongoDB', 'SQLite'],
   },
   {
     title: 'Cloud & Tooling',
@@ -206,9 +206,9 @@ export const skills = [
 
 export const earlier = [
   {
-    name: 'Air Quality Monitoring System',
-    tags: ['Django', 'REST API', 'MySQL', 'React'],
-    desc: 'Real-time air quality platform handling 1,000+ sensor records a day, with REST endpoints for sensor ingestion and dashboards that surface trends.',
+    name: 'Loveland Holidays',
+    tags: ['React 18', 'Vite', 'Tailwind CSS', 'Framer Motion', 'EmailJS'],
+    desc: 'Production website for a Kerala-based travel company: touch-swipeable tour carousel, auto-sliding reviews, a validated enquiry form that emails the team through EmailJS, one-tap WhatsApp enquiries prefilled per package, an embedded Google Map, and routed About, Contact and policy pages — with sitemap, Open Graph tags and an llms.txt for search and AI discovery.',
   },
   {
     name: 'Smart Hiking',
@@ -232,14 +232,16 @@ export const earlier = [
   },
 ]
 
+// Cards with a `verify` link open the certificate on the issuer's own site when clicked.
+// `image` adds an arrow button that previews the certificate.
 export const certifications = [
-  { title: 'AI-Powered Software & System Design', by: 'DeepLearning.AI · Coursera', when: 'Feb 2026' },
-  { title: 'Team Software Engineering with AI', by: 'DeepLearning.AI · Coursera', when: 'Feb 2026' },
-  { title: 'Introduction to Generative AI for Software Development', by: 'DeepLearning.AI · Coursera', when: 'Feb 2026' },
-  { title: 'Agile Project Management', by: 'HP LIFE', when: 'Feb 2026' },
-  { title: 'Introduction to Cybersecurity Awareness', by: 'HP LIFE', when: 'Feb 2026' },
-  { title: 'SQL and Relational Databases 101', by: 'IBM · Cognitive Class', when: 'Feb 2026' },
-  { title: 'AWS S3 Basics', by: 'Coursera Project Network', when: 'Jan 2026' },
+  { title: 'AI-Powered Software & System Design', by: 'DeepLearning.AI · Coursera', when: 'Feb 2026', verify: 'https://coursera.org/verify/M40EQYAV26UT', image: '/certs/ai-system-design.webp' },
+  { title: 'Team Software Engineering with AI', by: 'DeepLearning.AI · Coursera', when: 'Feb 2026', verify: 'https://coursera.org/verify/B0YI8F98ANM0', image: '/certs/team-software-engineering-ai.webp' },
+  { title: 'Introduction to Generative AI for Software Development', by: 'DeepLearning.AI · Coursera', when: 'Feb 2026', verify: 'https://coursera.org/verify/VD1NN3ZRWRS7', image: '/certs/genai-software-development.webp' },
+  { title: 'SQL and Relational Databases 101', by: 'IBM · Cognitive Class', when: 'Feb 2026', verify: 'https://courses.cognitiveclass.ai/certificates/5c770922efac4593a535ca717c5cf360', image: '/certs/sql-relational-databases.webp' },
+  { title: 'AWS S3 Basics', by: 'Coursera Project Network', when: 'Jan 2026', verify: 'https://coursera.org/verify/GUNVO6VQDBMA', image: '/certs/aws-s3-basics.webp' },
+  { title: 'Agile Project Management', by: 'HP LIFE', when: 'Feb 2026', image: '/certs/agile-project-management.webp' },
+  { title: 'Introduction to Cybersecurity Awareness', by: 'HP LIFE', when: 'Feb 2026', image: '/certs/cybersecurity-awareness.webp' },
   { title: 'Python Full-Stack Developer', by: 'Quest Innovative Solutions', when: '2024' },
 ]
 

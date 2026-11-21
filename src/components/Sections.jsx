@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useScroll, useSpring, useTransform } from 'framer-motion'
 import { Btn, ease, Reveal, SectionHead, SplitWords } from './UI'
 import { Icon } from './Icons'
@@ -166,7 +166,67 @@ export function Earlier({ bp }) {
 }
 
 /* ---------- Learning ---------- */
+// Full-screen preview of a certificate image.
+function CertPreview({ cert, onClose }) {
+  useEffect(() => {
+    if (!cert) return
+    const onKey = (e) => { if (e.key === 'Escape') onClose() }
+    window.__lenis?.stop()
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', onKey)
+    return () => {
+      window.__lenis?.start()
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [cert, onClose])
+
+  return (
+    <AnimatePresence>
+      {cert && (
+        <motion.div
+          className="lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${cert.title} certificate`}
+          onClick={onClose}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.35 }}
+        >
+          <motion.figure
+            className="lightbox__fig"
+            onClick={(e) => e.stopPropagation()}
+            initial={{ opacity: 0, y: 40, scale: 0.94 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 24, scale: 0.96 }}
+            transition={{ duration: 0.55, ease }}
+          >
+            <img src={cert.image} alt={`${cert.title} certificate issued to Sharon K Varghese by ${cert.by}`} />
+            <figcaption>
+              <b>{cert.title}</b>
+              <small>{cert.by} · {cert.when}</small>
+            </figcaption>
+            <button className="lightbox__close" onClick={onClose} aria-label="Close preview" autoFocus>
+              <Icon name="close" size={18} strokeWidth={2} />
+            </button>
+          </motion.figure>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
+
 export function Learning() {
+  const [preview, setPreview] = useState(null)
+  const opener = useRef(null)
+  // Return keyboard focus to the arrow that opened the preview.
+  const close = useCallback(() => {
+    setPreview(null)
+    requestAnimationFrame(() => opener.current?.focus({ preventScroll: true }))
+  }, [])
+
   return (
     <section className="section learning">
       <div className="container">
@@ -174,14 +234,42 @@ export function Learning() {
         <div className="learning__grid">
           <div className="certs">
             {certifications.map((c, i) => (
-              <Reveal className="cert" key={c.title} delay={(i % 2) * 0.08} y={30}>
+              <motion.div
+                key={c.title}
+                className={`cert ${c.verify ? 'cert--link' : ''}`}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '0px 0px -10% 0px' }}
+                transition={{ duration: 0.9, ease, delay: (i % 2) * 0.08 }}
+              >
+                {/* Invisible full-card link, so the whole box opens the verification page. */}
+                {c.verify && (
+                  <a
+                    className="cert__link"
+                    href={c.verify}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-cursor="Verify"
+                    aria-label={`${c.title}, ${c.by}, ${c.when} — open the certificate on the issuer's site`}
+                  />
+                )}
                 <span className="cert__seal" aria-hidden="true">{c.by.charAt(0)}</span>
                 <div>
                   <b>{c.title}</b>
                   <small>{c.by}</small>
                 </div>
                 <span className="cert__when">{c.when}</span>
-              </Reveal>
+                {c.image && (
+                  <button
+                    className="cert__peek"
+                    onClick={(e) => { opener.current = e.currentTarget; setPreview(c) }}
+                    data-cursor="View"
+                    aria-label={`View the ${c.title} certificate`}
+                  >
+                    <Icon name="arrow" size={14} strokeWidth={2.2} />
+                  </button>
+                )}
+              </motion.div>
             ))}
           </div>
           <div className="edu">
@@ -196,6 +284,7 @@ export function Learning() {
           </div>
         </div>
       </div>
+      <CertPreview cert={preview} onClose={close} />
     </section>
   )
 }
@@ -279,7 +368,10 @@ export function Footer() {
   return (
     <footer className="footer">
       <div className="container footer__row">
-        <span>© {new Date().getFullYear()} {profile.full}</span>
+        <span>
+          © {new Date().getFullYear()} {profile.full} ·{' '}
+          <a href={links.github} target="_blank" rel="me noopener noreferrer" className="footer__handle">@sh46on</a>
+        </span>
         <span className="footer__clock"><span className="pulse" /> Kochi · {time} IST</span>
         <button className="footer__top" onClick={() => scrollToId('home')}>
           Back to top <Icon name="arrowUp" size={16} />

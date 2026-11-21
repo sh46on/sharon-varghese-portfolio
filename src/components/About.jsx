@@ -75,7 +75,8 @@ export default function About({ bp }) {
               <p>
                 I'm Sharon K Varghese, a Software Engineer at Quest Innovative Solutions in Kochi.
                 I rejoined Quest on August 10, 2026 after a year and a half there as a trainee,
-                shipping full-stack products with React, Angular and Django.
+                shipping full-stack products with React, Angular and Django. Online I go by{' '}
+                <b>sh46on</b> — the SV mark around this site is mine.
               </p>
               <p>
                 My background in industrial electrical engineering still shapes how I build:
@@ -87,7 +88,7 @@ export default function About({ bp }) {
 
           <div className="about__media" ref={frameRef}>
             <motion.div className="about__frame" style={{ clipPath: clip }}>
-              <motion.img src="/img/studio.webp" alt="Studio portrait of Sharon" style={{ scale }} />
+              <motion.img src="/img/studio.webp" alt="Sharon K Varghese — studio portrait" style={{ scale }} />
             </motion.div>
             {bp !== 'mobile' && (
               <motion.div className="about__tag" style={{ y: tagY }}>
