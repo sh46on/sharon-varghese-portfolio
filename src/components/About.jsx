@@ -16,6 +16,24 @@ function Word({ children, progress, range }) {
   )
 }
 
+// A small unit chart: one square per item, filled ones pop in one by one.
+function Dots({ total, filled }) {
+  return (
+    <div className="dots" aria-hidden="true">
+      {Array.from({ length: total }, (_, i) => (
+        <motion.i
+          key={i}
+          className={i < filled ? 'on' : ''}
+          initial={{ scale: 0, opacity: 0 }}
+          whileInView={{ scale: 1, opacity: 1 }}
+          viewport={{ once: true, margin: '0px 0px -8% 0px' }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1], delay: 0.3 + i * 0.035 }}
+        />
+      ))}
+    </div>
+  )
+}
+
 function ScrollStory() {
   const ref = useRef(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.85', 'end 0.45'] })
@@ -62,8 +80,7 @@ export default function About({ bp }) {
               <p>
                 My background in industrial electrical engineering still shapes how I build:
                 understand the whole system, sweat the small connections, and leave it more
-                reliable than I found it. I've mentored interns through
-                their first production code.
+                reliable than I found it.
               </p>
             </Reveal>
           </div>
@@ -84,8 +101,18 @@ export default function About({ bp }) {
         <div className="stats">
           {stats.map((s, i) => (
             <Reveal className="stat" key={s.label} delay={i * 0.08}>
-              <b><Counter to={s.value} suffix={s.suffix} /></b>
-              <span>{s.label}</span>
+              <div className="stat__head">
+                <span className="stat__num">{String(i + 1).padStart(2, '0')}</span>
+                <span className="stat__tag">{s.tag}</span>
+              </div>
+              <div className="stat__value">
+                <b><Counter to={s.value} /></b>
+                <span className="stat__suffix serif">{s.suffix}</span>
+              </div>
+              <div className="stat__foot">
+                <Dots total={s.dots[0]} filled={s.dots[1]} />
+                <p className="stat__label">{s.label}</p>
+              </div>
             </Reveal>
           ))}
         </div>

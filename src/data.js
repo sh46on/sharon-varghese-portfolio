@@ -43,10 +43,11 @@ export const marquee = [
 ]
 
 export const stats = [
-  { value: 20, suffix: '+', label: 'Reusable UI components shipped' },
-  { value: 8, suffix: '+', label: 'Full-stack apps delivered' },
-  { value: 25, suffix: '%', label: 'Faster data loads after API rework' },
-  { value: 3, suffix: '+', label: 'Interns mentored on live projects' },
+  // dots: how many squares the mini graphic draws, and how many of them are filled
+  { value: 20, suffix: '+', tag: 'Components', label: 'Reusable UI components shipped', dots: [20, 20] },
+  { value: 8, suffix: '+', tag: 'Products', label: 'Full-stack apps delivered', dots: [8, 8] },
+  { value: 25, suffix: '%', tag: 'Performance', label: 'Faster data loads after API rework', dots: [20, 5] },
+  { value: 3, suffix: '+', tag: 'Industry', label: 'Industrial projects shipped', dots: [3, 3] },
 ]
 
 export const projects = [
@@ -142,7 +143,7 @@ export const experience = [
       'Delivered 5+ full-stack applications with Django, Angular, React and MySQL in an Agile team.',
       'Built 20+ reusable, responsive UI components that improved mobile usability across products.',
       'Reworked REST integrations to cut data load time by 25%, and tuned SQL for a 20% backend gain.',
-      'Supported production deployments and mentored 3+ interns through live projects and code review.',
+      'Supported production deployments and post-launch maintenance of Django applications.',
     ],
   },
   {
@@ -198,7 +199,7 @@ export const skills = [
   {
     title: 'How I work',
     note: 'Habits that ship',
-    items: ['Mobile-first', 'Component architecture', 'Auth & roles', 'Query optimisation', 'Agile / Scrum', 'Mentoring'],
+    items: ['Mobile-first', 'Component architecture', 'Auth & roles', 'Query optimisation', 'Agile / Scrum', 'Production deployments'],
     span: 'wide',
   },
 ]

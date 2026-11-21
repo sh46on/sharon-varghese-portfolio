@@ -11,8 +11,9 @@ React + Vite + Framer Motion, with Lenis smooth scrolling.
 ## Where things live
 
 - `src/data.js` — every piece of copy: profile, projects, experience, skills, certificates, social links.
+- `src/components/Film.jsx` — the scroll-scrubbed 240-frame canvas sequence (noise → sphere → interface → SV).
 - `src/components/` — sections (Hero, Work, About, Gallery, Sections) and site chrome (header, mobile dock, loader, cursor).
-- `src/styles.css` — colour tokens for light and dark mode at the top, then per-section styles and the tablet (<1024px) and mobile (<640px) layouts.
+- `src/styles.css` — colour tokens (`--accent` is the ultramarine; `--accent-inv` is its partner for dark panels) for light and dark mode at the top, then per-section styles and the tablet (<1024px) and mobile (<640px) layouts.
 - `public/img/` — web-optimised photos. `public/favicon.svg` — the SV monogram.
 
 Deploys as a static site (Vercel, Netlify, GitHub Pages): build command `npm run build`, output folder `dist`.

@@ -171,8 +171,8 @@ function draw(ctx, w, h, dpr, frame, model, colors) {
   // Work in CSS pixels, then scale by dpr when plotting.
   const W = w / dpr, H = h / dpr
   const wide = W / H > 1.2
-  const f = wide ? Math.min(W * 0.62, H * 1.4) * 0.3 : Math.min(W, H * 0.8) * 0.27
-  const ox = (wide ? W * 0.62 : W / 2) * dpr
+  const f = wide ? Math.min(W * 0.6, H * 1.35) * 0.27 : Math.min(W, H * 0.8) * 0.27
+  const ox = (wide ? W * 0.65 : W / 2) * dpr
   const oy = (wide ? H * 0.5 : H * 0.6) * dpr
   const base = Math.max(1.2, Math.min(W, H) / 480) * dpr
   const fd = f * dpr

@@ -172,7 +172,7 @@ export default function Hero({ ready, bp }) {
               animate={ready ? { opacity: 1, scale: 1 } : undefined}
               transition={{ duration: 1.1, ease, delay: 1.05 }}
             >
-              <img src="/img/portrait.webp" alt="" />
+              <img src="/img/studio-face.webp" alt="" />
             </motion.div>
           </motion.div>
 
